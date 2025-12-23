@@ -1,4 +1,5 @@
 import 'package:fire_chat/core/app/style.dart';
+import 'package:fire_chat/features/auth/presentation/pages/auth_page.dart';
 import 'package:fire_chat/features/chat_rooms/presentation/pages/chat_room_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class FireChatApp extends StatelessWidget {
         title: 'FireChat app',
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: const ChatRoomPage(),
+        home: const AuthPage(),
     );
   }
 }
