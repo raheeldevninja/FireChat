@@ -11,6 +11,7 @@ class AppTextField extends StatefulWidget {
   final bool isReadOnly;
   final bool autoFocus;
   final TextInputType keyboardType;
+  final Function(String)? onChanged;
 
   const AppTextField({
     super.key,
@@ -22,6 +23,7 @@ class AppTextField extends StatefulWidget {
     this.isReadOnly = false,
     this.autoFocus = false,
     this.keyboardType = TextInputType.text,
+    this.onChanged,
   })  : isPassword = false;
 
   const AppTextField.password({
@@ -34,6 +36,7 @@ class AppTextField extends StatefulWidget {
     this.isReadOnly = false,
     this.autoFocus = false,
     this.keyboardType = TextInputType.visiblePassword,
+    this.onChanged,
   })  : isPassword = true;
 
   @override
@@ -52,9 +55,9 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       keyboardType: widget.keyboardType,
       autofocus: widget.autoFocus,
-      controller: widget.controller,
       obscureText: widget.isPassword ? _obscureText : false,
       maxLines: widget.maxLines,
       readOnly: widget.isReadOnly,
@@ -71,6 +74,7 @@ class _AppTextFieldState extends State<AppTextField> {
             : null,
       ),
       validator: widget.validator,
+      onChanged: widget.onChanged,
       cursorColor: context.colorScheme.onSecondary,
     );
   }

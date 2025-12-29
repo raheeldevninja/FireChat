@@ -70,3 +70,6 @@ ios/Flutter/Release.xcconfig
 /android/local.properties
 /android/build/reports/problems/problems-report.html
 
+# Freezed & JSON generated files
+*.freezed.dart
+*.g.dart
