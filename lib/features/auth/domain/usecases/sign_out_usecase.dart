@@ -1,8 +1,8 @@
 import 'package:fire_chat/features/auth/domain/repositories/auth_repository.dart';
 
-class SignOut {
+class SignOutUseCase {
   final AuthRepository repository;
-  SignOut(this.repository);
+  SignOutUseCase(this.repository);
 
   Future<void> call() {
     return repository.signOut();

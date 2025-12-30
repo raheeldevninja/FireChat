@@ -1,4 +1,3 @@
-import 'package:fire_chat/core/constants/validators.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_chat/features/auth/presentation/auth.dart';
@@ -20,6 +19,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -27,22 +27,27 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BaseAppBar(title: 'Register', showBackButton: true),
-      body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state.status == AuthStatus.authenticated) {
-            context.go('/chat-room');
-          }
-          else if (state.status == AuthStatus.error) {
-            context.showSnackBarMessage(context, message: state.error ?? 'An error occurred');
-          }
-        },
-        builder: (context, state) {
-          final authCubit = context.read<AuthCubit>();
-          final isLoading = state.status == AuthStatus.loading;
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.authenticated) {
+          context.go('/chat-rooms');
+        }
+        else if (state.status == AuthStatus.error) {
+          context.showSnackBarMessage(context, message: state.error ?? 'An error occurred');
+        }
+      },
+      builder: (context, state) {
 
-          return LayoutBuilder(
+        final authCubit = context.read<AuthCubit>();
+        final isLoading = state.status == AuthStatus.loading;
+
+        return Scaffold(
+          appBar: BaseAppBar(
+            title: 'Register',
+            showBackButton: true,
+            isLoading: isLoading,
+          ),
+          body: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -123,12 +128,12 @@ class _RegisterViewState extends State<RegisterView> {
                             AppButton(
                               isLoading: isLoading,
                               onPressed: isLoading ? null : () {
-                                      if (!_formKey.currentState!.validate()) {
-                                        return;
-                                      }
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
 
-                                      context.read<AuthCubit>().register();
-                                    },
+                                context.read<AuthCubit>().register();
+                              },
                               text: 'Register',
                             ),
                             SizedBox(height: 16),
@@ -156,9 +161,9 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

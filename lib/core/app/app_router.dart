@@ -1,11 +1,16 @@
 import 'package:fire_chat/core/app/go_router_refresh_stream.dart';
+import 'package:fire_chat/features/account/presentation/page/account_page.dart';
 import 'package:fire_chat/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:fire_chat/features/auth/presentation/pages/change_password_page.dart';
 import 'package:fire_chat/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:fire_chat/features/auth/presentation/pages/login_page.dart';
 import 'package:fire_chat/features/auth/presentation/pages/register_page.dart';
 import 'package:fire_chat/features/auth/presentation/pages/splash_page.dart';
 import 'package:fire_chat/features/chat_rooms/presentation/pages/chat_room_page.dart';
+import 'package:fire_chat/features/home/presentation/cubit/home_cubit.dart';
+import 'package:fire_chat/features/home/presentation/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 GoRouter createRouter(AuthCubit authCubit) {
   return GoRouter(
@@ -25,7 +30,10 @@ GoRouter createRouter(AuthCubit authCubit) {
             state.fullPath == '/register' ||
             state.fullPath == '/forgot-password' ||
             state.fullPath == '/splash') {
-          return '/chat-room';
+
+          context.read<HomeCubit>().currentIndexChanged(0);
+
+          return '/chat-rooms';
         }
 
         return null; // allow current route
@@ -64,10 +72,22 @@ GoRouter createRouter(AuthCubit authCubit) {
         path: '/forgot-password',
         builder: (context, state) => const ForgotPasswordPage(),
       ),
-
+      ShellRoute(
+          builder: (context, state, child) => HomePage(child: child),
+          routes: [
+            GoRoute(
+                path: '/chat-rooms',
+                builder: (context, state) => ChatRoomPage(),
+            ),
+            GoRoute(
+              path: '/account-page',
+              builder: (context, state) => AccountPage(),
+            ),
+          ]
+      ),
       GoRoute(
-        path: '/chat-room',
-        builder: (context, state) => const ChatRoomPage(),
+        path: '/change-password',
+        builder: (context, state) => const ChangePasswordPage(),
       ),
 
     ],

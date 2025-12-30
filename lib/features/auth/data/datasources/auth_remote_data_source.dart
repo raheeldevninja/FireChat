@@ -98,6 +98,37 @@ class AuthRemoteDataSource {
     return _firestore.collection('users').doc(user.id).set(user.toDocument());
   }
 
+  Future<void> sendPasswordResetEmail(String email) {
+    return _auth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<void> changePassword(String currentPassword, String newPassword) async {
+
+    try {
+
+      final currentUser = _auth.currentUser;
+
+      if(currentUser == null) {
+        throw Exception('User not logged in');
+      }
+
+      final credentials = EmailAuthProvider.credential(
+        email: currentUser.email!,
+        password: currentPassword,
+      );
+
+      await currentUser.reauthenticateWithCredential(credentials);
+      await currentUser.updatePassword(newPassword);
+
+    }
+    on FirebaseAuthException catch (e) {
+      throw _handleFirebaseAuthException(e);
+    }
+    catch(e) {
+      throw 'An error occurred: ${e.toString()}';
+    }
+
+  }
 
   Future<void> signOut() {
     return _auth.signOut();

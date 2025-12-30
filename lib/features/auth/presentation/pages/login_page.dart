@@ -1,4 +1,3 @@
-import 'package:fire_chat/core/constants/validators.dart';
 import 'package:fire_chat/features/auth/presentation/auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class _AuthViewState extends State<AuthView> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == AuthStatus.authenticated) {
-            context.go('/chat-room');
+            context.go('/chat-rooms');
           }
           else if (state.status == AuthStatus.error) {
             context.showSnackBarMessage(context, message: state.error ?? 'An error occurred');

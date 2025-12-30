@@ -1,6 +1,6 @@
 part of 'auth_cubit.dart';
 
-enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
+enum AuthStatus { initial, loading, authenticated, unauthenticated, error, passwordReset, passwordChanged }
 
 class AuthState extends Equatable {
 
@@ -8,6 +8,7 @@ class AuthState extends Equatable {
   final String name;
   final String email;
   final String password;
+  final String newPassword;
   final UserEntity? user;
   final String? error;
 
@@ -16,6 +17,7 @@ class AuthState extends Equatable {
     this.name = '',
     this.email = '',
     this.password = '',
+    this.newPassword = '',
     this.user,
     this.error,
   });
@@ -25,6 +27,7 @@ class AuthState extends Equatable {
     String? name,
     String? email,
     String? password,
+    String? newPassword,
     UserEntity? user,
     String? error,
   }) {
@@ -33,6 +36,7 @@ class AuthState extends Equatable {
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
+      newPassword: newPassword ?? this.newPassword,
       user: user ?? this.user,
       error: error,
     );
@@ -45,6 +49,7 @@ class AuthState extends Equatable {
     user,
     email,
     password,
+    newPassword,
     error,
   ];
 }

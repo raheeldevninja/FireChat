@@ -1,6 +1,5 @@
-import 'package:fire_chat/core/extensions/context.dart';
-import 'package:fire_chat/core/ui/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:fire_chat/features/auth/presentation/auth.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

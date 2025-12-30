@@ -1,5 +1,5 @@
-import 'package:fire_chat/features/auth/presentation/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fire_chat/features/chat_rooms/presentation/chatrooms.dart';
 
 class ChatRoomPage extends StatelessWidget {
   const ChatRoomPage({super.key});
@@ -11,70 +11,47 @@ class ChatRoomPage extends StatelessWidget {
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
 
-          final isLoading = state.status == AuthStatus.loading;
+          if(state.status == AuthStatus.authenticated) {
+            final user = state.user;
+            final initials = _getInitials(user?.name);
 
-          return BlocBuilder<AuthCubit, AuthState>(
-            builder: (context, state) {
-
-              if(state.status == AuthStatus.authenticated) {
-                final user = state.user;
-                final initials = _getInitials(user?.name);
-
-                return Column(
-                  children: [
-                    //header
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      color: context.colorScheme.surfaceContainer,
-                      child: Row(
+            return Column(
+              children: [
+                //header
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  color: context.colorScheme.surfaceContainer,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: context.colorScheme.secondary,
+                        child: Text(
+                          initials,
+                          style: context.textTheme.titleLarge!.copyWith(
+                            color: context.colorScheme.onPrimaryFixed,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            radius: 24,
-                            backgroundColor: context.colorScheme.secondary,
-                            child: Text(
-                              initials,
-                              style: context.textTheme.titleLarge!.copyWith(
-                                color: context.colorScheme.onPrimaryFixed,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(user?.name ?? 'NA', style: context.textTheme.bodyLarge),
-                              Text(user?.email ?? 'NA', style: context.textTheme.bodyMedium),
-                            ],
-                          ),
+                          Text(user?.name ?? 'NA', style: context.textTheme.bodyLarge),
+                          Text(user?.email ?? 'NA', style: context.textTheme.bodyMedium),
                         ],
                       ),
-                    ),
+                    ],
+                  ),
+                ),
+              ],
+            );
 
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        children: [
-                          Text('Chat Rooms Page'),
-                          const SizedBox(height: 16),
-                          AppButton(
-                            isLoading: isLoading,
-                            onPressed: isLoading ? null : () {
-                              context.read<AuthCubit>().signOut();
-                            },
-                            text: 'Logout',
-                          ),
-                        ],
-                      ),
-                    ),
+          }
 
-                  ],
-                );
+          return const SizedBox.shrink();
 
-              }
 
-              return const SizedBox.shrink();
-            },
-          );
         },
       ),
     );

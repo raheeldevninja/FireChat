@@ -38,4 +38,14 @@ class AuthRepositoryImpl implements AuthRepository {
     return remote.signOut();
   }
 
+  @override
+  Future<void> sendPasswordResetEmail({required String email}) {
+    return remote.sendPasswordResetEmail(email);
+  }
+
+  @override
+  Future<void> changePassword({required String currentPassword, required String newPassword}) {
+    return remote.changePassword(currentPassword, newPassword);
+  }
+
 }

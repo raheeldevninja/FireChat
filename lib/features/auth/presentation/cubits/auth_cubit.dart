@@ -1,4 +1,6 @@
+import 'package:fire_chat/features/auth/domain/usecases/change_password_usecase.dart';
 import 'package:fire_chat/features/auth/domain/usecases/register_usecase.dart';
+import 'package:fire_chat/features/auth/domain/usecases/send_password_reset_email_usecase.dart';
 import 'package:fire_chat/features/auth/presentation/auth.dart';
 
 part 'auth_state.dart';
@@ -8,7 +10,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
-  final SignOut signOutUserCase;
+  final SignOutUseCase signOutUserCase;
+  final SendPasswordResetEmailUseCase sendPasswordResetEmailUseCase;
+  final ChangePasswordUseCase changePasswordUseCase;
 
   late final StreamSubscription _authSub;
 
@@ -17,6 +21,8 @@ class AuthCubit extends Cubit<AuthState> {
     required this.registerUseCase,
     required this.signOutUserCase,
     required this.repository,
+    required this.sendPasswordResetEmailUseCase,
+    required this.changePasswordUseCase,
   }) : super(const AuthState()) {
     _authSub = repository.authStateChanges.listen((user) {
       if (user != null) {
@@ -37,6 +43,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   void passwordChanged(String value) {
     emit(state.copyWith(password: value, error: null, status: AuthStatus.initial));
+  }
+
+  void newPasswordChanged(String value) {
+    emit(state.copyWith(newPassword: value, error: null, status: AuthStatus.initial));
   }
 
   Future<void> login() async {
@@ -61,13 +71,37 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-
   Future<void> signOut() async {
     emit(state.copyWith(status: AuthStatus.loading));
 
     try {
       await signOutUserCase();
+      emit(state.copyWith(status: AuthStatus.authenticated));
     } catch (e) {
+      emit(state.copyWith(status: AuthStatus.error, error: e.toString()));
+    }
+  }
+
+  Future<void> sendResetPasswordEmail() async {
+    emit(state.copyWith(status: AuthStatus.loading));
+
+    try {
+      await sendPasswordResetEmailUseCase(state.email);
+      emit(state.copyWith(status: AuthStatus.passwordReset));
+    }
+    catch(e) {
+      emit(state.copyWith(status: AuthStatus.error, error: e.toString()));
+    }
+  }
+
+  Future<void> changePassword() async {
+    emit(state.copyWith(status: AuthStatus.loading));
+
+    try {
+      await changePasswordUseCase(state.password, state.newPassword);
+      emit(state.copyWith(status: AuthStatus.passwordChanged));
+    }
+    catch(e) {
       emit(state.copyWith(status: AuthStatus.error, error: e.toString()));
     }
   }
