@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fire_chat/features/auth/data/models/user_dto.dart';
+import 'package:fire_chat/shared/data/models/user_dto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRemoteDataSource {

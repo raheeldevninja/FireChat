@@ -15,7 +15,7 @@ extension Context on BuildContext {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       content: AwesomeSnackbarContent(
-        title: 'Product Store',
+        title: 'FireChat',
         message: message,
         contentType: contentType,
       ),

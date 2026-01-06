@@ -1,6 +1,3 @@
-import 'package:fire_chat/features/auth/domain/usecases/change_password_usecase.dart';
-import 'package:fire_chat/features/auth/domain/usecases/register_usecase.dart';
-import 'package:fire_chat/features/auth/domain/usecases/send_password_reset_email_usecase.dart';
 import 'package:fire_chat/features/auth/presentation/auth.dart';
 
 part 'auth_state.dart';
@@ -104,6 +101,10 @@ class AuthCubit extends Cubit<AuthState> {
     catch(e) {
       emit(state.copyWith(status: AuthStatus.error, error: e.toString()));
     }
+  }
+
+  void updateCurrentUser(UserEntity updatedUser) {
+    emit(state.copyWith(user: updatedUser));
   }
 
   @override

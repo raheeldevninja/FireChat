@@ -1,4 +1,5 @@
 import 'package:fire_chat/core/app/style.dart';
+import 'package:fire_chat/features/account/presentation/account.dart';
 import 'package:fire_chat/features/auth/presentation/auth.dart';
 import 'package:fire_chat/features/home/presentation/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class FireChatApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => getIt<AuthCubit>()),
         BlocProvider(create: (_) => getIt<HomeCubit>()),
+        BlocProvider(create: (_) => getIt<AccountCubit>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

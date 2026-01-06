@@ -1,4 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fire_chat/features/account/data/datasources/account_remote_data_source.dart';
+import 'package:fire_chat/features/account/data/repositories/account_repository_impl.dart';
+import 'package:fire_chat/features/account/domain/repositories/account_repository.dart';
+import 'package:fire_chat/features/account/domain/usecases/update_profile_use_case.dart';
+import 'package:fire_chat/features/account/presentation/cubit/account_cubit.dart';
 import 'package:fire_chat/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:fire_chat/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:fire_chat/features/auth/domain/repositories/auth_repository.dart';
@@ -54,6 +59,20 @@ Future<void> setupDependencies() async {
 
   //home
   getIt.registerFactory(() => HomeCubit());
+
+
+  //account
+  getIt.registerLazySingleton(() => AccountRemoteDataSource(getIt(), getIt()));
+
+  getIt.registerLazySingleton<AccountRepository>(() => AccountRepositoryImpl(getIt()));
+
+  getIt.registerLazySingleton(() => UpdateProfileUseCase(getIt()));
+
+  getIt.registerFactory(() =>
+      AccountCubit(
+          updateProfileUseCase: getIt(),
+      ),
+  );
 
 }
 

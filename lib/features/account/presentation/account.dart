@@ -1,8 +1,14 @@
-export 'package:flutter/material.dart';
 export 'package:fire_chat/core/extensions/context.dart';
 export 'package:fire_chat/core/ui/widgets/app_button.dart';
 export 'package:fire_chat/core/ui/widgets/app_dialog.dart';
 export 'package:fire_chat/core/ui/widgets/base_app_bar.dart';
 export 'package:fire_chat/features/auth/presentation/cubits/auth_cubit.dart';
+export 'package:fire_chat/features/account/presentation/cubit/account_cubit.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:go_router/go_router.dart';
+export 'package:fire_chat/shared/domain/entities/user_entity.dart';
+export 'package:equatable/equatable.dart';
+export 'package:fire_chat/features/account/domain/repositories/account_repository.dart';
+export 'package:fire_chat/features/account/data/datasources/account_remote_data_source.dart';
+export 'package:fire_chat/shared/data/models/user_dto.dart';
+export 'package:fire_chat/features/account/domain/usecases/update_profile_use_case.dart';

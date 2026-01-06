@@ -1,5 +1,7 @@
 import 'package:fire_chat/core/app/go_router_refresh_stream.dart';
-import 'package:fire_chat/features/account/presentation/page/account_page.dart';
+import 'package:fire_chat/features/account/presentation/pages/account_page.dart';
+import 'package:fire_chat/features/account/presentation/pages/profile_page.dart';
+import 'package:fire_chat/features/account/presentation/pages/update_profile_page.dart';
 import 'package:fire_chat/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:fire_chat/features/auth/presentation/pages/change_password_page.dart';
 import 'package:fire_chat/features/auth/presentation/pages/forgot_password_page.dart';
@@ -89,7 +91,14 @@ GoRouter createRouter(AuthCubit authCubit) {
         path: '/change-password',
         builder: (context, state) => const ChangePasswordPage(),
       ),
-
+      GoRoute(
+        path: '/profile-page',
+        builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: '/update-profile-page',
+        builder: (context, state) => const UpdateProfilePage(),
+      ),
     ],
   );
 }

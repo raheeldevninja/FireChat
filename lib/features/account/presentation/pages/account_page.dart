@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fire_chat/features/account/presentation/account.dart';
 
 class AccountPage extends StatelessWidget {
@@ -50,6 +51,21 @@ class AccountPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  const Divider(
+                    height: 0,
+                  ),
+
+                  ListTile(
+                    leading: const Icon(Icons.person_3_outlined),
+                    title: Text(
+                      "View Profile",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                    onTap: () {
+                      context.push('/profile-page');
+                    },
+                  ),
                   const Divider(
                     height: 0,
                   ),

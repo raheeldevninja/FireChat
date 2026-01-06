@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fire_chat/features/auth/domain/entities/user_entity.dart';
+import 'package:fire_chat/shared/domain/entities/user_entity.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_dto.freezed.dart';

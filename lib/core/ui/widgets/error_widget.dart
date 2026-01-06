@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fire_chat/core/extensions/context.dart';
 
-class ErrorWidget extends StatelessWidget {
-  const ErrorWidget(this.error, {super.key});
+class ErrorLayout extends StatelessWidget {
+  const ErrorLayout(this.error, {super.key});
 
   final String error;
 
